@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -45,6 +46,27 @@ namespace WinUITriggerTest
 
 
 
+
+        public ICommand PlaceSelectedCommand
+        {
+            get { return (ICommand)GetValue(PlaceSelectedCommandProperty); }
+            set { SetValue(PlaceSelectedCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty PlaceSelectedCommandProperty =
+            DependencyProperty.Register("PlaceSelectedCommand", typeof(ICommand), typeof(CustomControl1), new PropertyMetadata(null));
+
+
+        private ObservableCollection<PlaceModel> _Places;
+        public ObservableCollection<PlaceModel> Places
+        {
+            get => _Places;
+            set => SetProp(ref _Places, value);
+        }
+
+
+
+
         public CustomControl1()
         {
             this.DefaultStyleKey = typeof(CustomControl1);
@@ -52,6 +74,11 @@ namespace WinUITriggerTest
             ToggleNodeExpansionCommand = new RelayCommand(() => {
                 IsExpanded = !IsExpanded;
             });
+
+            Places = new ObservableCollection<PlaceModel>();
+            Places.Add(new PlaceModel("New York"));
+            Places.Add(new PlaceModel("London"));
+            Places.Add(new PlaceModel("Paris"));
         }
 
 

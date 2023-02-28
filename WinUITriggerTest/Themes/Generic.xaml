@@ -3,6 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:WinUITriggerTest"
     xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
     xmlns:triggers="using:CommunityToolkit.WinUI.UI.Triggers">
 
     <Style TargetType="local:CustomControl1" >
@@ -14,8 +16,8 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
 
-
-                        <Button ui:FrameworkElementExtensions.AncestorType="local:CustomControl1" x:Name="b1"
+                        <StackPanel Orientation="Vertical">
+                            <Button ui:FrameworkElementExtensions.AncestorType="local:CustomControl1" x:Name="b1"
                                 DataContext="{Binding (ui:FrameworkElementExtensions.Ancestor), RelativeSource={RelativeSource Self}}"
                                 Command="{Binding ToggleNodeExpansionCommand}" CommandParameter="1" 
                                 HorizontalAlignment="Center"
@@ -43,6 +45,48 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                         </Button>
+
+                            <!-- Checkbox command works -->
+                            <ItemsControl ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
+                                          ItemsSource="{Binding (ui:FrameworkElementExtensions.Ancestor).Places, RelativeSource={RelativeSource Self}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
+                                                Content="{Binding Name}" 
+                                                IsChecked="{Binding IsSelected, Mode=TwoWay}" 
+                                                Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, 
+                                                RelativeSource={RelativeSource Self}}" 
+                                                CommandParameter="{Binding}"/>
+
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                
+                            </ItemsControl>
+
+
+
+                            <!-- ToggleSwitch command does not work -->
+                            <ItemsControl ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
+                                          ItemsSource="{Binding (ui:FrameworkElementExtensions.Ancestor).Places, RelativeSource={RelativeSource Self}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ToggleSwitch ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
+                                                OnContent="{Binding Name}" OffContent="{Binding Name}" 
+                                                IsOn="{Binding IsSelected, Mode=TwoWay}" >
+                                            <Interactivity:Interaction.Behaviors>
+                                                <Interactions:EventTriggerBehavior EventName="Toggled">
+                                                    <Interactions:InvokeCommandAction 
+                                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, RelativeSource={RelativeSource Self}}"
+                                                        CommandParameter="{Binding}">
+                                                    </Interactions:InvokeCommandAction>
+                                                </Interactions:EventTriggerBehavior>
+                                            </Interactivity:Interaction.Behaviors>
+                                        </ToggleSwitch>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+
+                            </ItemsControl>
+                        </StackPanel>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
