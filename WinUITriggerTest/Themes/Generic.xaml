@@ -11,72 +11,72 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:CustomControl1">
+                    
                     <Border
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
 
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState>
+                                    <VisualState.StateTriggers>
+                                        <triggers:IsEqualStateTrigger Value="{TemplateBinding IsExpanded}"  To="True"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="b1.Content" Value="Expanded"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState>
+                                    <VisualState.StateTriggers>
+                                        <triggers:IsEqualStateTrigger Value="{TemplateBinding IsExpanded}" To="False"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="b1.Content" Value="Not Expanded"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        
+
                         <StackPanel Orientation="Vertical">
-                            <Button ui:FrameworkElementExtensions.AncestorType="local:CustomControl1" x:Name="b1"
-                                DataContext="{Binding (ui:FrameworkElementExtensions.Ancestor), RelativeSource={RelativeSource Self}}"
-                                Command="{Binding ToggleNodeExpansionCommand}" CommandParameter="1" 
+                            <Button x:Name="b1"
+                                Command="{TemplateBinding ToggleNodeExpansionCommand}" CommandParameter="1" 
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Content="Click Me">
+                            </Button>
 
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup>
-                                    <VisualState>
-                                        <VisualState.StateTriggers>
-                                            <triggers:IsEqualStateTrigger Value="{Binding (ui:FrameworkElementExtensions.Ancestor).IsExpanded, RelativeSource={RelativeSource Self}, Mode=OneWay}"  To="True"/>
-                                        </VisualState.StateTriggers>
-                                        <VisualState.Setters>
-                                            <Setter Target="b1.Content" Value="Expanded"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState>
-                                        <VisualState.StateTriggers>
-                                            <triggers:IsEqualStateTrigger Value="{Binding (ui:FrameworkElementExtensions.Ancestor).IsExpanded, RelativeSource={RelativeSource Self}, Mode=OneWay}" To="False"/>
-                                        </VisualState.StateTriggers>
-                                        <VisualState.Setters>
-                                            <Setter Target="b1.Content" Value="Not Expanded"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Button>
 
-                            <!-- Checkbox command works -->
-                            <ItemsControl ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
-                                          ItemsSource="{Binding (ui:FrameworkElementExtensions.Ancestor).Places, RelativeSource={RelativeSource Self}}">
+                            <!-- Checkbox works -->
+                            <ItemsControl ui:FrameworkElementExtensions.AncestorType="local:CustomControl1" 
+                                          ItemsSource="{TemplateBinding Places}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <CheckBox ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
                                                 Content="{Binding Name}" 
                                                 IsChecked="{Binding IsSelected, Mode=TwoWay}" 
                                                 Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, 
-                                                RelativeSource={RelativeSource Self}}" 
+                                                RelativeSource={RelativeSource Self}}"
                                                 CommandParameter="{Binding}"/>
 
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
-                                
                             </ItemsControl>
 
-
-
                             <!-- ToggleSwitch command does not work -->
-                            <ItemsControl ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
-                                          ItemsSource="{Binding (ui:FrameworkElementExtensions.Ancestor).Places, RelativeSource={RelativeSource Self}}">
+                            <ItemsControl ui:FrameworkElementExtensions.AncestorType="local:CustomControl1" 
+                                          ItemsSource="{TemplateBinding Places}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <ToggleSwitch ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
                                                 OnContent="{Binding Name}" OffContent="{Binding Name}" 
-                                                IsOn="{Binding IsSelected, Mode=TwoWay}" >
+                                                IsOn="{Binding IsSelected, Mode=TwoWay}">
                                             <Interactivity:Interaction.Behaviors>
                                                 <Interactions:EventTriggerBehavior EventName="Toggled">
                                                     <Interactions:InvokeCommandAction 
-                                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, RelativeSource={RelativeSource Self}}"
+                                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, 
+                                                        RelativeSource={RelativeSource Self}, Mode=OneWay}"
                                                         CommandParameter="{Binding}">
                                                     </Interactions:InvokeCommandAction>
                                                 </Interactions:EventTriggerBehavior>
@@ -84,7 +84,6 @@
                                         </ToggleSwitch>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
-
                             </ItemsControl>
                         </StackPanel>
                     </Border>

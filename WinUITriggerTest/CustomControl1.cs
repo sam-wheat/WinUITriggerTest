@@ -22,7 +22,7 @@ using Microsoft.UI.Xaml.Media;
 
 namespace WinUITriggerTest
 {
-    public sealed class CustomControl1 : Control, INotifyPropertyChanged
+    public sealed class CustomControl1 : Control
     {
         public bool IsExpanded
         {
@@ -31,7 +31,7 @@ namespace WinUITriggerTest
         }
 
         public static readonly DependencyProperty IsExpandedProperty =
-            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(CustomControl1), new PropertyMetadata(false, (s,e) => ((CustomControl1)s).RaisePropertyChanged(nameof(IsExpanded))));
+            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(CustomControl1), new PropertyMetadata(false));
 
 
 
@@ -45,8 +45,6 @@ namespace WinUITriggerTest
             DependencyProperty.Register("ToggleNodeExpansionCommand", typeof(ICommand), typeof(CustomControl1), new PropertyMetadata(null));
 
 
-
-
         public ICommand PlaceSelectedCommand
         {
             get { return (ICommand)GetValue(PlaceSelectedCommandProperty); }
@@ -57,13 +55,14 @@ namespace WinUITriggerTest
             DependencyProperty.Register("PlaceSelectedCommand", typeof(ICommand), typeof(CustomControl1), new PropertyMetadata(null));
 
 
-        private ObservableCollection<PlaceModel> _Places;
         public ObservableCollection<PlaceModel> Places
         {
-            get => _Places;
-            set => SetProp(ref _Places, value);
+            get { return (ObservableCollection<PlaceModel>)GetValue(PlacesProperty); }
+            set { SetValue(PlacesProperty, value); }
         }
-
+        
+        public static readonly DependencyProperty PlacesProperty =
+            DependencyProperty.Register("Places", typeof(ObservableCollection<PlaceModel>), typeof(CustomControl1), new PropertyMetadata(null));
 
 
 
@@ -80,20 +79,5 @@ namespace WinUITriggerTest
             Places.Add(new PlaceModel("London"));
             Places.Add(new PlaceModel("Paris"));
         }
-
-
-        #region INotifyPropertyChanged implementation
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public void RaisePropertyChanged([CallerMemberNameAttribute] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-        public void SetProp<T>(ref T prop, T value, [CallerMemberNameAttribute] string propertyName = "")
-        {
-            if (!Object.Equals(prop, value))
-            {
-                prop = value;
-                RaisePropertyChanged(propertyName);
-            }
-        }
-        #endregion
     }
 }

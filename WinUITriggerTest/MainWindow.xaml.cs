@@ -29,12 +29,19 @@ namespace WinUITriggerTest;
 public sealed partial class MainWindow : Window
 {
     public ICommand PlaceSelectedCommand { get; set; }
+    public ICommand ToggleNodeExpansionCommand { get; set; }
 
     public MainWindow()
     {
         this.InitializeComponent();
-        PlaceSelectedCommand = new RelayCommand<PlaceModel>(async x => {
-            string place = x.Name;
+
+        PlaceSelectedCommand = new RelayCommand<PlaceModel>(x => {
+            System.Diagnostics.Debugger.Break();
+        });
+
+
+        ToggleNodeExpansionCommand = new RelayCommand(() => {
+            System.Diagnostics.Debugger.Break();
         });
     }
 
