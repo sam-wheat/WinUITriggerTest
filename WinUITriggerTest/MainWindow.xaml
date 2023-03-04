@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:triggers="using:CommunityToolkit.WinUI.UI.Triggers"
     mc:Ignorable="d">
-    
+    <Page>
     <Grid DataContext="{Binding ElementName=mainWindow}">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -27,5 +27,5 @@
             PlaceSelectedCommand="{Binding PlaceSelectedCommand, Mode=TwoWay}">
         </local:CustomControl1>
     </Grid>
-    
+    </Page>
 </Window>

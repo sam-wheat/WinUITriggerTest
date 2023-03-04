@@ -21,7 +21,8 @@
                             <VisualStateGroup>
                                 <VisualState>
                                     <VisualState.StateTriggers>
-                                        <triggers:IsEqualStateTrigger Value="{TemplateBinding IsExpanded}"  To="True"/>
+                                        <!--<triggers:IsEqualStateTrigger Value="{TemplateBinding IsExpanded}"  To="True"/>-->
+                                        <triggers:IsEqualStateTrigger Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsExpanded, Mode=OneWay}"  To="True"/>
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="b1.Content" Value="Expanded"/>
@@ -29,7 +30,8 @@
                                 </VisualState>
                                 <VisualState>
                                     <VisualState.StateTriggers>
-                                        <triggers:IsEqualStateTrigger Value="{TemplateBinding IsExpanded}" To="False"/>
+                                        <!--<triggers:IsEqualStateTrigger Value="{TemplateBinding IsExpanded}" To="False"/>-->
+                                        <triggers:IsEqualStateTrigger Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsExpanded, Mode=OneWay}"  To="False"/>
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="b1.Content" Value="Not Expanded"/>
@@ -38,10 +40,11 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         
-
+                        <!--Command="{TemplateBinding ToggleNodeExpansionCommand}"-->
                         <StackPanel Orientation="Vertical">
                             <Button x:Name="b1"
-                                Command="{TemplateBinding ToggleNodeExpansionCommand}" CommandParameter="1" 
+                                Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ToggleNodeExpansionCommand, Mode=OneWay}"
+                                CommandParameter="1" 
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Content="Click Me">
@@ -70,13 +73,12 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <ToggleSwitch ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
-                                                OnContent="{Binding Name}" OffContent="{Binding Name}" 
+                                                OnContent="{Binding Name}" OffContent="{Binding Name}"
                                                 IsOn="{Binding IsSelected, Mode=TwoWay}">
                                             <Interactivity:Interaction.Behaviors>
-                                                <Interactions:EventTriggerBehavior EventName="Toggled">
+                                                <Interactions:EventTriggerBehavior EventName="Toggled" >
                                                     <Interactions:InvokeCommandAction 
-                                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, 
-                                                        RelativeSource={RelativeSource Self}, Mode=OneWay}"
+                                                        Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlaceSelectedCommand, Mode=OneWay}"
                                                         CommandParameter="{Binding}">
                                                     </Interactions:InvokeCommandAction>
                                                 </Interactions:EventTriggerBehavior>
