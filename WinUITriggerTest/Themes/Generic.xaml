@@ -73,12 +73,14 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <ToggleSwitch ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
-                                                OnContent="{Binding Name}" OffContent="{Binding Name}"
+                                                OnContent="{Binding Name}" OffContent="{Binding Name}" 
                                                 IsOn="{Binding IsSelected, Mode=TwoWay}">
                                             <Interactivity:Interaction.Behaviors>
                                                 <Interactions:EventTriggerBehavior EventName="Toggled" >
                                                     <Interactions:InvokeCommandAction 
-                                                        Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlaceSelectedCommand, Mode=OneWay}"
+                                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, 
+                                                        RelativeSource={RelativeSource AncestorType=CustomControl1},
+                                                        Mode=OneWay}"
                                                         CommandParameter="{Binding}">
                                                     </Interactions:InvokeCommandAction>
                                                 </Interactions:EventTriggerBehavior>
