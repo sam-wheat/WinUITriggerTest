@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:triggers="using:CommunityToolkit.WinUI.UI.Triggers"
     mc:Ignorable="d">
-    <Page>
+    
     <Grid DataContext="{Binding ElementName=mainWindow}">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -19,13 +19,14 @@
 
         <local:BlankPage1></local:BlankPage1>
         
-        <local:CustomControl1 
+        <local:CustomControl1 x:Name="cc1"
             BorderThickness="2" 
             BorderBrush="Black" 
             Grid.Row="1"
-            ToggleNodeExpansionCommand="{Binding ToggleNodeExpansionCommand, Mode=TwoWay}"
+            
             PlaceSelectedCommand="{Binding PlaceSelectedCommand, Mode=TwoWay}">
         </local:CustomControl1>
-    </Grid>
-    </Page>
+            <!--ToggleNodeExpansionCommand="{Binding ToggleNodeExpansionCommand, Mode=TwoWay}"-->
+        </Grid>
+    
 </Window>

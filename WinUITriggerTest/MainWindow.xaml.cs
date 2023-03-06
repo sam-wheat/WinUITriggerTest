@@ -41,7 +41,7 @@ public sealed partial class MainWindow : Window
 
 
         ToggleNodeExpansionCommand = new RelayCommand(() => {
-            System.Diagnostics.Debugger.Break();
+            cc1.IsExpanded = !cc1.IsExpanded;
         });
     }
 

@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:WinUITriggerTest"
     xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    xmlns:system="using:System"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
     xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
     xmlns:triggers="using:CommunityToolkit.WinUI.UI.Triggers">
@@ -11,27 +12,27 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:CustomControl1">
-                    
-                    <Border
+
+                    <Border ui:FrameworkElementExtensions.AncestorType="local:CustomControl1" x:Name="layoutRoot"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup>
-                                <VisualState>
+                                <VisualState x:Name="Expanded">
                                     <VisualState.StateTriggers>
                                         <!--<triggers:IsEqualStateTrigger Value="{TemplateBinding IsExpanded}"  To="True"/>-->
-                                        <triggers:IsEqualStateTrigger Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsExpanded, Mode=OneWay}"  To="True"/>
+                                        <triggers:IsEqualStateTrigger Value="{Binding (ui:FrameworkElementExtensions.Ancestor).IsExpanded, ElementName=layoutRoot, Mode=OneWay}"  To="True"/>
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="b1.Content" Value="Expanded"/>
                                     </VisualState.Setters>
                                 </VisualState>
-                                <VisualState>
+                                <VisualState x:Name="NotExpanded">
                                     <VisualState.StateTriggers>
                                         <!--<triggers:IsEqualStateTrigger Value="{TemplateBinding IsExpanded}" To="False"/>-->
-                                        <triggers:IsEqualStateTrigger Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsExpanded, Mode=OneWay}"  To="False"/>
+                                        <triggers:IsEqualStateTrigger Value="{Binding (ui:FrameworkElementExtensions.Ancestor).IsExpanded, ElementName=layoutRoot, Mode=OneWay}"  To="False"/>
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="b1.Content" Value="Not Expanded"/>
@@ -78,9 +79,7 @@
                                             <Interactivity:Interaction.Behaviors>
                                                 <Interactions:EventTriggerBehavior EventName="Toggled" >
                                                     <Interactions:InvokeCommandAction 
-                                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, 
-                                                        RelativeSource={RelativeSource AncestorType=CustomControl1},
-                                                        Mode=OneWay}"
+                                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, ElementName=layoutRoot, Mode=TwoWay}"
                                                         CommandParameter="{Binding}">
                                                     </Interactions:InvokeCommandAction>
                                                 </Interactions:EventTriggerBehavior>
