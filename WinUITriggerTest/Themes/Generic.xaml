@@ -13,7 +13,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:CustomControl1">
 
-                    <Border  x:Name="layoutRoot"
+                    <Border ui:FrameworkElementExtensions.AncestorType="local:CustomControl1" x:Name="layoutRoot"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
