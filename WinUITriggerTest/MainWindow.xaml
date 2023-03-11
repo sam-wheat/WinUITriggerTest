@@ -14,19 +14,12 @@
     <Grid DataContext="{Binding ElementName=mainWindow}">
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <local:BlankPage1></local:BlankPage1>
-        
         <local:CustomControl1 x:Name="cc1"
-            BorderThickness="2" 
-            BorderBrush="Black" 
-            Grid.Row="1"
-            
-            PlaceSelectedCommand="{Binding PlaceSelectedCommand, Mode=TwoWay}">
+                BorderThickness="2" 
+                BorderBrush="Black" 
+                PlaceSelectedCommand="{Binding PlaceSelectedCommand, Mode=TwoWay}">
         </local:CustomControl1>
-            <!--ToggleNodeExpansionCommand="{Binding ToggleNodeExpansionCommand, Mode=TwoWay}"-->
-        </Grid>
-    
+    </Grid>
 </Window>

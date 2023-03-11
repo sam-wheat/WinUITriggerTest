@@ -13,7 +13,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:CustomControl1">
 
-                    <Border ui:FrameworkElementExtensions.AncestorType="local:CustomControl1" x:Name="layoutRoot"
+                    <Border  x:Name="layoutRoot"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
@@ -41,23 +41,26 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         
-                        <!--Command="{TemplateBinding ToggleNodeExpansionCommand}"-->
-                        <StackPanel Orientation="Vertical">
+                        
+                        <StackPanel Orientation="Vertical" Margin="0,20,0,0">
+                            <TextBlock Text="Clicking the button should cause the content to toggle between Expanded/Not Expanded"/>
+                            <TextBlock Text="Clicking Checkboxes or ToggleSwitches should hit a breakpoint in code."/>
                             <Button x:Name="b1"
                                 Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ToggleNodeExpansionCommand, Mode=OneWay}"
                                 CommandParameter="1" 
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Content="Click Me">
+                                Content="Click Me"
+                                Margin="0,20,0,0">
                             </Button>
 
 
-                            <!-- Checkbox works -->
-                            <ItemsControl ui:FrameworkElementExtensions.AncestorType="local:CustomControl1" 
+                            
+                            <ItemsControl 
                                           ItemsSource="{TemplateBinding Places}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <CheckBox ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
+                                        <CheckBox 
                                                 Content="{Binding Name}" 
                                                 IsChecked="{Binding IsSelected, Mode=TwoWay}" 
                                                 Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, 
@@ -68,9 +71,7 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
-                            <!-- ToggleSwitch command does not work -->
-                            <ItemsControl 
-                                          ItemsSource="{TemplateBinding Places}">
+                            <ItemsControl ItemsSource="{TemplateBinding Places}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <ToggleSwitch 
@@ -79,7 +80,8 @@
                                             <Interactivity:Interaction.Behaviors>
                                                 <Interactions:EventTriggerBehavior EventName="Toggled" >
                                                     <Interactions:InvokeCommandAction 
-                                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand, ElementName=layoutRoot, Mode=TwoWay}"
+                                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).PlaceSelectedCommand,
+                                                        ElementName=layoutRoot, Mode=TwoWay}"
                                                         CommandParameter="{Binding}">
                                                     </Interactions:InvokeCommandAction>
                                                 </Interactions:EventTriggerBehavior>
