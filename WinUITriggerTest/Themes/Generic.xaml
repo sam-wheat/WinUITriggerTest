@@ -69,7 +69,7 @@
                             </ItemsControl>
 
                             <!-- ToggleSwitch command does not work -->
-                            <ItemsControl ui:FrameworkElementExtensions.AncestorType="local:CustomControl1" 
+                            <ItemsControl 
                                           ItemsSource="{TemplateBinding Places}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
