@@ -73,7 +73,7 @@
                                           ItemsSource="{TemplateBinding Places}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <ToggleSwitch ui:FrameworkElementExtensions.AncestorType="local:CustomControl1"
+                                        <ToggleSwitch 
                                                 OnContent="{Binding Name}" OffContent="{Binding Name}" 
                                                 IsOn="{Binding IsSelected, Mode=TwoWay}">
                                             <Interactivity:Interaction.Behaviors>
