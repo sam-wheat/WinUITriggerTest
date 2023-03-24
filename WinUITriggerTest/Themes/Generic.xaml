@@ -96,4 +96,38 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="local:PeopleControl" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:PeopleControl">
+                    <Border ui:FrameworkElementExtensions.AncestorType="local:PeopleControl" x:Name="layoutRoot"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+
+                        <ItemsControl x:Name="peopleItemsControl"
+                                      ui:FrameworkElementExtensions.AncestorType="local:PeopleControl"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=People}" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ToggleSwitch ui:FrameworkElementExtensions.AncestorType="local:PeopleControl" OnContent="{Binding Name}" OffContent="{Binding Name}" >
+                                        <Interactivity:Interaction.Behaviors>
+                                            <Interactions:EventTriggerBehavior EventName="Toggled">
+                                                <Interactions:InvokeCommandAction 
+                                                    Command="{Binding (ui:FrameworkElementExtensions.Ancestor).TogglePersonCommand, 
+                                                    ElementName=layoutRoot, Mode=TwoWay}" 
+                                                    CommandParameter="{Binding}">
+                                                </Interactions:InvokeCommandAction>
+                                            </Interactions:EventTriggerBehavior>
+                                        </Interactivity:Interaction.Behaviors>
+                                    </ToggleSwitch>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

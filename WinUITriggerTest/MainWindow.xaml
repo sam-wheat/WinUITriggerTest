@@ -11,15 +11,21 @@
     xmlns:triggers="using:CommunityToolkit.WinUI.UI.Triggers"
     mc:Ignorable="d">
     
-    <Grid DataContext="{Binding ElementName=mainWindow}">
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <local:CustomControl1 x:Name="cc1"
+        <local:CustomControl1 x:Name="cc1" DataContext="{Binding ElementName=mainWindow}"
                 BorderThickness="2" 
                 BorderBrush="Black" 
                 PlaceSelectedCommand="{Binding PlaceSelectedCommand, Mode=TwoWay}">
         </local:CustomControl1>
+
+        <local:PeopleControl Grid.Column="1" Margin="0,20,0,0"/>
     </Grid>
 </Window>
