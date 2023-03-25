@@ -18,6 +18,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <local:CustomControl1 x:Name="cc1" DataContext="{Binding ElementName=mainWindow}"
@@ -27,5 +28,6 @@
         </local:CustomControl1>
 
         <local:PeopleControl Grid.Column="1" Margin="0,20,0,0"/>
+        <local:PhoneHostControl Grid.Column="2" Margin="0,20,0,0"/>
     </Grid>
 </Window>

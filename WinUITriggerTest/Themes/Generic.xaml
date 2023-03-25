@@ -105,26 +105,101 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
+                        <StackPanel Orientation="Vertical">
 
-                        <ItemsControl x:Name="peopleItemsControl"
-                                      ui:FrameworkElementExtensions.AncestorType="local:PeopleControl"
-                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=People}" >
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <ToggleSwitch ui:FrameworkElementExtensions.AncestorType="local:PeopleControl" OnContent="{Binding Name}" OffContent="{Binding Name}" >
-                                        <Interactivity:Interaction.Behaviors>
-                                            <Interactions:EventTriggerBehavior EventName="Toggled">
-                                                <Interactions:InvokeCommandAction 
-                                                    Command="{Binding (ui:FrameworkElementExtensions.Ancestor).TogglePersonCommand, 
-                                                    ElementName=layoutRoot, Mode=TwoWay}" 
-                                                    CommandParameter="{Binding}">
-                                                </Interactions:InvokeCommandAction>
-                                            </Interactions:EventTriggerBehavior>
-                                        </Interactivity:Interaction.Behaviors>
-                                    </ToggleSwitch>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                            <ItemsControl x:Name="peopleItemsControl"
+                                          ui:FrameworkElementExtensions.AncestorType="local:PeopleControl"
+                                          ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=People}" >
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ToggleSwitch ui:FrameworkElementExtensions.AncestorType="local:PeopleControl" OnContent="{Binding Name}" OffContent="{Binding Name}" >
+                                            <Interactivity:Interaction.Behaviors>
+                                                <Interactions:EventTriggerBehavior EventName="Toggled">
+                                                    <Interactions:InvokeCommandAction 
+                                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).TogglePersonCommand, 
+                                                        ElementName=layoutRoot, Mode=TwoWay}" 
+                                                        CommandParameter="{Binding}">
+                                                    </Interactions:InvokeCommandAction>
+                                                </Interactions:EventTriggerBehavior>
+                                            </Interactivity:Interaction.Behaviors>
+                                        </ToggleSwitch>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+
+                            <ComboBox
+                                Width="150"
+                                DisplayMemberPath="Name"
+                                ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=People}" SelectionChangedTrigger="Always" >
+
+                                <!--Command="{Binding (ui:FrameworkElementExtensions.Ancestor).TogglePersonCommand, ElementName=layoutRoot}"-->
+                                
+                                <Interactions:EventTriggerBehavior EventName="SelectionChanged">
+                                    <Interactions:InvokeCommandAction 
+                                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TogglePersonCommand}"
+                                            CommandParameter="{Binding SelectedItem}">
+                                    </Interactions:InvokeCommandAction>
+                                </Interactions:EventTriggerBehavior>
+                            </ComboBox>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:PhoneControl" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:PhoneControl">
+                    <Border ui:FrameworkElementExtensions.AncestorType="local:PhoneHostControl" 
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer x:Name="ContentScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <Grid x:Name="PART_Grid">
+                                
+
+                                <!--ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Phones}"-->
+                                <ItemsControl ui:FrameworkElementExtensions.AncestorType="local:PhoneHostControl" x:Name="phoneItemsControl"
+                                      ItemsSource="{Binding (ui:FrameworkElementExtensions.Ancestor).ViewBuilder.Phones, RelativeSource={RelativeSource Self}}"
+                                      Margin="3,10,0,0">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ToggleSwitch ui:FrameworkElementExtensions.AncestorType="local:PhoneHostControl" 
+                                                  OnContent="{Binding Item.Name}" OffContent="{Binding Item.Name}" 
+                                                  IsOn="{Binding IsSelected, Mode=TwoWay}" >
+                                                <Interactivity:Interaction.Behaviors>
+                                                    <Interactions:EventTriggerBehavior EventName="Toggled">
+                                                        <Interactions:InvokeCommandAction 
+                                                            Command="{Binding (ui:FrameworkElementExtensions.Ancestor).TogglePhoneCommand, 
+                                                            ElementName=phoneItemsControl, Mode=TwoWay}" 
+                                                            CommandParameter="{Binding}">
+                                                        </Interactions:InvokeCommandAction>
+                                                    </Interactions:EventTriggerBehavior>
+                                                </Interactivity:Interaction.Behaviors>
+                                            </ToggleSwitch>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:PhoneHostControl" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:PhoneHostControl">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid x:Name="PART_Grid" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
