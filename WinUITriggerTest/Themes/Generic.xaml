@@ -129,16 +129,18 @@
 
 
                             <ComboBox
+                                ui:FrameworkElementExtensions.AncestorType="local:PeopleControl"
                                 Width="150"
                                 DisplayMemberPath="Name"
-                                ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=People}" SelectionChangedTrigger="Always" >
-
-                                <!--Command="{Binding (ui:FrameworkElementExtensions.Ancestor).TogglePersonCommand, ElementName=layoutRoot}"-->
+                                ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=People}" 
+                                SelectionChangedTrigger="Always" >
                                 
+                                <!--Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TogglePersonCommand}"-->
                                 <Interactions:EventTriggerBehavior EventName="SelectionChanged">
                                     <Interactions:InvokeCommandAction 
-                                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TogglePersonCommand}"
-                                            CommandParameter="{Binding SelectedItem}">
+                                        Command="{Binding (ui:FrameworkElementExtensions.Ancestor).TogglePersonCommand, 
+                                        ElementName=layoutRoot, Mode=TwoWay}"
+                                        CommandParameter="{Binding SelectedItem}">
                                     </Interactions:InvokeCommandAction>
                                 </Interactions:EventTriggerBehavior>
                             </ComboBox>
